@@ -83,7 +83,6 @@ Options:
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s',
                     level=logging.DEBUG,
-                    filename='/var/log/bsdpserver.log',
                     datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
