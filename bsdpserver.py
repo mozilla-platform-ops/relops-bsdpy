@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 ################################################################################
 # Copyright 2015 The Regents of the University of Michigan
 #
