@@ -24,7 +24,7 @@ RUN apt-get -q update && \
 RUN pip install pydhcplib==0.6.2
 RUN pip install docopt==0.6.2
 RUN mkdir /nbi
-RUN wget -o /bsdpserver.py https://raw.githubusercontent.com/mozilla-platform-ops/relops-bsdpy/master/bsdpserver.py
+RUN wget -q https://raw.githubusercontent.com/mozilla-platform-ops/relops-bsdpy/master/bsdpserver.py -O /bsdpserver.py
 RUN chmod 755 /bsdpserver.py
 
 EXPOSE 67/udp
