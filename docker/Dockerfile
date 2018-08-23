@@ -14,7 +14,7 @@ ENV DOCKER_BSDPY_PATH /nbi
 RUN apt-get -q update && \
     apt-get install -y --no-install-recommends \
     nginx \
-    tftpd-hpa \
+    atftpd \
     inotify-tools && \
     apt-get autoremove -y && \
     apt-get clean && \
@@ -27,6 +27,8 @@ RUN mkdir /nbi
 RUN wget -q https://raw.githubusercontent.com/mozilla-platform-ops/relops-bsdpy/master/bsdpserver.py -O /bsdpserver.py
 RUN chmod 755 /bsdpserver.py
 
+RUN ln -sf /dev/stdout /var/log/nginx-access.log && ln -sf /dev/stderr /var/log/nginx-error.log
+
 EXPOSE 67/udp
 EXPOSE 69/udp
 EXPOSE 80
@@ -34,4 +36,3 @@ EXPOSE 80
 ADD nginx.conf /etc/nginx/nginx.conf
 ADD entry.sh /entry.sh
 
-ENTRYPOINT ["/entry.sh"]
