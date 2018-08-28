@@ -64,6 +64,7 @@ import os, fnmatch
 import plistlib
 import logging, optparse
 import signal, errno
+import traceback
 from docopt import docopt
 
 platform = sys.platform
@@ -840,7 +841,8 @@ def main():
                 elif len(packet.GetOption('vendor_encapsulated_options')) <= 7:
                     pass
         except:
-            # Error? No worries, keep going.
+            # Dump tracbacks to stderr and carry on
+            traceback.print_exc()
             pass
 
 if __name__ == '__main__':
