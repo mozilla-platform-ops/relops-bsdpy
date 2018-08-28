@@ -693,8 +693,10 @@ def ack(packet, defaultnbi, msgtype):
         booterfile = ''
         rootpath = ''
         selectedimage = ''
-        if nbiurl.hostname[0].isalpha():
-            basedmgpath = getBaseDmgPath(nbiurl)
+
+        # TODO: This implementation is broken.  Args/opts needs better handling
+        # if nbiurl.hostname[0].isalpha():
+        #    basedmgpath = getBaseDmgPath(nbiurl)
 
         # Iterate over enablednbis and retrieve the kernel and boot DMG for each
         try:
