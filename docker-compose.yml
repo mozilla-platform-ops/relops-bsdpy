@@ -3,26 +3,26 @@ version: '3.5'
 
 services:
   server:
-    image: "mozillarelops/bsdpy_server:latest"
+    build:
+        context: ./docker/server
     network_mode: "host"
     ports:
       - "67:67/udp"
-    environment:
-      - DOCKER_BSDPY_IP=10.49.56.200
     volumes:
       - /nbi:/nbi
-    entrypoint: [ "sleep", "99999" ]
-#    command:  [ "-p", "/nbi", "-i", "ens160", "-r", "http"]
+    command:  [ "-p", "/nbi", "-i", "ens160", "-r", "http"]
 
   tftpd:
-    image: "mozillarelops/bsdpy_tftpd:latest"
+    build:
+        context: ./docker/tftpd
     volumes:
       - /nbi:/nbi
     ports:
       - "69:69/udp"
 
   httpd:
-    image: "mozillarelops/bsdpy_httpd:latest"
+    build:
+        context: ./docker/httpd
     ports:
       - "80:80/tcp"
     volumes:
