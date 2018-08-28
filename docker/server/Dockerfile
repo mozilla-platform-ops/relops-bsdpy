@@ -13,26 +13,23 @@ ENV DOCKER_BSDPY_PATH /nbi
 
 RUN apt-get -q update && \
     apt-get install -y --no-install-recommends \
-    nginx \
-    atftpd \
+    git \
     inotify-tools && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /etc/apt/mirror.list && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN pip install pydhcplib==0.6.2
+RUN git clone https://github.com/mozilla-platform-ops/pydhcplib.git && \
+    cd pydhcplib && \
+    python setup.py install
+
 RUN pip install docopt==0.6.2
 RUN mkdir /nbi
-RUN wget -q https://raw.githubusercontent.com/mozilla-platform-ops/relops-bsdpy/master/bsdpserver.py -O /bsdpserver.py
+COPY bsdpserver.py /bsdpserver.py
 RUN chmod 755 /bsdpserver.py
 
-RUN ln -sf /dev/stdout /var/log/nginx-access.log && ln -sf /dev/stderr /var/log/nginx-error.log
-
 EXPOSE 67/udp
-EXPOSE 69/udp
-EXPOSE 80
 
-ADD nginx.conf /etc/nginx/nginx.conf
-ADD entry.sh /entry.sh
-
+ENTRYPOINT [ "/bsdpserver.py" ]
+CMD [ "-p", "/nbi", "-i", "eth0", "-r", "http"]
