@@ -64,6 +64,7 @@ import os, fnmatch
 import plistlib
 import logging, optparse
 import signal, errno
+import traceback
 from docopt import docopt
 
 platform = sys.platform
@@ -692,8 +693,10 @@ def ack(packet, defaultnbi, msgtype):
         booterfile = ''
         rootpath = ''
         selectedimage = ''
-        if nbiurl.hostname[0].isalpha():
-            basedmgpath = getBaseDmgPath(nbiurl)
+
+        # TODO: This implementation is broken.  Args/opts needs better handling
+        # if nbiurl.hostname[0].isalpha():
+        #    basedmgpath = getBaseDmgPath(nbiurl)
 
         # Iterate over enablednbis and retrieve the kernel and boot DMG for each
         try:
@@ -840,7 +843,8 @@ def main():
                 elif len(packet.GetOption('vendor_encapsulated_options')) <= 7:
                     pass
         except:
-            # Error? No worries, keep going.
+            # Dump tracbacks to stderr and carry on
+            traceback.print_exc()
             pass
 
 if __name__ == '__main__':

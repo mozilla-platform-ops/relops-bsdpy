@@ -1,0 +1,30 @@
+version: '3.5'
+
+
+services:
+  server:
+    build:
+        context: ./docker/server
+    network_mode: "host"
+    ports:
+      - "67:67/udp"
+    volumes:
+      - /nbi:/nbi
+    command:  [ "-p", "/nbi", "-i", "ens160", "-r", "http"]
+
+  tftpd:
+    build:
+        context: ./docker/tftpd
+    volumes:
+      - /nbi:/nbi
+    ports:
+      - "69:69/udp"
+
+  httpd:
+    build:
+        context: ./docker/httpd
+    ports:
+      - "80:80/tcp"
+    volumes:
+      - /nbi:/nbi
+
